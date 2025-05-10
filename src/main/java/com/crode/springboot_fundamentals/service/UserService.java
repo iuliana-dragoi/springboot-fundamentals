@@ -1,11 +1,11 @@
 package com.crode.springboot_fundamentals.service;
 
 import com.crode.springboot_fundamentals.dto.UserDto;
+import com.crode.springboot_fundamentals.model.Role;
 import com.crode.springboot_fundamentals.model.User;
 import com.crode.springboot_fundamentals.repository.UserRepository;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +20,13 @@ public class UserService {
     }
 
     public List<UserDto> findAll() {
-        return userRepository.findAll().stream().map(UserService::mapToUserDto).collect(Collectors.toList());
-    }
-
-    private static UserDto mapToUserDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setName(user.getName());
-        userDto.setAge(user.getAge());
-        return userDto;
+        List<User> users = userRepository.findAll();
+        return users.stream().map(
+                user -> new UserDto(
+                        user.getName(),
+                        user.getAge(),
+                        user.getRoles().stream().map(Role::getName).collect(Collectors.toSet())
+                )
+        ).collect(Collectors.toList());
     }
 }
