@@ -14,10 +14,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "name")
     String name;
-
     @Column(name = "age")
     int age;
 
