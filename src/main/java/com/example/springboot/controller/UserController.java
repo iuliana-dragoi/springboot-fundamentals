@@ -1,6 +1,7 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.dto.UserDto;
+import com.example.springboot.model.User;
 import com.example.springboot.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,8 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@Valid @RequestBody UserDto userDto) {
-        return ResponseEntity.ok("User created");
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
+        User user = userService.save(userDto);
+        return ResponseEntity.ok(new UserDto(user));
     }
 }

@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -21,11 +20,11 @@ public class UserDto {
     @Min(18)
     int age;
 
-    Set<String> roles;
+    Set<Role> roles;
 
     public UserDto(User user) {
         this.name = user.getName();
         this.age = user.getAge();
-        this.roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
+        this.roles = user.getRoles();
     }
 }
